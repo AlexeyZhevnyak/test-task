@@ -78,22 +78,22 @@ src/
 ### Installation
 
 
-1**Install dependencies**
+1 **Install dependencies**
    ```bash
    npm install
    ```
 
-2**Configure environment variables**
+2 **Configure environment variables**
 
-   Create a `.env` file in the root directory:
+   Update a `.env` file in the root directory:
    ```env
-   VITE_OPEN_API_KEY=your_api_key_here
+   VITE_API_KEY=your_api_key_here
    ```
 
    **Important:**
    - The API key must be prefixed with `VITE_` for Vite to expose it to the client
 
-3**Start development server**
+3 **Start development server**
    ```bash
    npm run dev
    ```
