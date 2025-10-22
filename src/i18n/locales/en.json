@@ -1,0 +1,107 @@
+{
+  "app": {
+    "title": "Government Social Support Portal",
+    "subtitle": "Financial Assistance Application"
+  },
+  "language": {
+    "english": "English",
+    "arabic": "Arabic"
+  },
+  "steps": {
+    "personal": "Personal Information",
+    "family": "Family & Financial",
+    "situation": "Situation Description"
+  },
+  "buttons": {
+    "next": "Next",
+    "back": "Back",
+    "submit": "Submit Application",
+    "reset": "Reset Form",
+    "newApplication": "New Application"
+  },
+  "personal": {
+    "name": "Full Name",
+    "nameHelper": "Enter your full legal name",
+    "nationalId": "National ID",
+    "nationalIdHelper": "Enter your national identification number",
+    "dateOfBirth": "Date of Birth",
+    "gender": "Gender",
+    "genderMale": "Male",
+    "genderFemale": "Female",
+    "address": "Address",
+    "addressHelper": "Street address",
+    "city": "City",
+    "state": "State/Province",
+    "country": "Country",
+    "phone": "Phone Number",
+    "phoneHelper": "Include country code",
+    "email": "Email Address",
+    "emailHelper": "We'll send confirmation to this email"
+  },
+  "family": {
+    "maritalStatus": "Marital Status",
+    "maritalSingle": "Single",
+    "maritalMarried": "Married",
+    "maritalDivorced": "Divorced",
+    "maritalWidowed": "Widowed",
+    "dependents": "Number of Dependents",
+    "dependentsHelper": "People who depend on your income",
+    "employmentStatus": "Employment Status",
+    "employmentEmployed": "Employed",
+    "employmentUnemployed": "Unemployed",
+    "employmentSelfEmployed": "Self-Employed",
+    "employmentRetired": "Retired",
+    "monthlyIncome": "Monthly Income",
+    "monthlyIncomeHelper": "Total monthly income in $",
+    "housingStatus": "Housing Status",
+    "housingOwned": "Owned",
+    "housingRented": "Rented",
+    "housingWithFamily": "Living with Family",
+    "housingHomeless": "Homeless"
+  },
+  "situation": {
+    "currentFinancialSituation": "Current Financial Situation",
+    "currentFinancialSituationHelper": "Describe your current financial circumstances in detail",
+    "employmentCircumstances": "Employment Circumstances",
+    "employmentCircumstancesHelper": "Explain your employment situation and any challenges",
+    "reasonForApplying": "Reason for Applying",
+    "reasonForApplyingHelper": "Why are you applying for financial assistance?"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidEmail": "Please enter a valid email address",
+    "invalidPhone": "Please enter a valid phone number",
+    "invalidUAEPhone": "Please enter a valid UAE phone number (e.g., +971 4 XXX XXXX or +971 50 XXX XXXX)",
+    "invalidUAENationalId": "Please enter a valid UAE National ID (15 digits starting with 784)",
+    "maxLength": "Maximum {{count}} characters allowed",
+    "minValue": "Minimum value is {{min}}",
+    "invalidDate": "Please enter a valid date",
+    "mustBe18": "You must be at least 18 years old"
+  },
+  "success": {
+    "title": "Application Submitted Successfully!",
+    "message": "Your application has been received and is being processed.",
+    "referenceNumber": "Reference Number",
+    "keepReference": "Please save this reference number for tracking your application.",
+    "nextSteps": "Next Steps",
+    "nextStepsText": "You will receive an email confirmation within 24 hours. Our team will review your application and contact you within 5-7 business days."
+  },
+  "errors": {
+    "submissionFailed": "Failed to submit application. Please try again.",
+    "networkError": "Network error. Please check your connection and try again."
+  },
+  "progress": {
+    "saved": "Progress saved automatically"
+  },
+  "ai": {
+    "helpMeWrite": "Help Me Write",
+    "generating": "Generating suggestion...",
+    "suggestionTitle": "AI Writing Suggestion",
+    "accept": "Accept",
+    "edit": "Edit",
+    "discard": "Discard",
+    "errorGeneration": "Failed to generate suggestion. Please try again.",
+    "editSuggestion": "Edit the suggestion below before accepting",
+    "prompt": "I am unemployed with no income. Help me describe my financial hardship. Maximum - 2000 characters. Produce single option"
+  }
+}

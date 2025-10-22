@@ -1,0 +1,108 @@
+{
+  "app": {
+    "title": "بوابة الدعم الاجتماعي الحكومية",
+    "subtitle": "طلب المساعدة المالية"
+  },
+  "language": {
+    "english": "الإنجليزية",
+    "arabic": "العربية"
+  },
+  "steps": {
+    "personal": "المعلومات الشخصية",
+    "family": "العائلة والمالية",
+    "situation": "وصف الحالة"
+  },
+  "buttons": {
+    "next": "التالي",
+    "back": "السابق",
+    "submit": "تقديم الطلب",
+    "reset": "إعادة تعيين النموذج",
+    "newApplication": "طلب جديد"
+  },
+  "personal": {
+    "name": "الاسم الكامل",
+    "nameHelper": "أدخل اسمك القانوني الكامل",
+    "nationalId": "الرقم الوطني",
+    "nationalIdHelper": "أدخل رقم الهوية الوطنية",
+    "dateOfBirth": "تاريخ الميلاد",
+    "gender": "الجنس",
+    "genderMale": "ذكر",
+    "genderFemale": "أنثى",
+    "address": "العنوان",
+    "addressHelper": "عنوان الشارع",
+    "city": "المدينة",
+    "state": "الولاية/المحافظة",
+    "country": "البلد",
+    "phone": "رقم الهاتف",
+    "phoneHelper": "أضف رمز البلد",
+    "email": "البريد الإلكتروني",
+    "emailHelper": "سنرسل التأكيد إلى هذا البريد"
+  },
+  "family": {
+    "maritalStatus": "الحالة الاجتماعية",
+    "maritalSingle": "أعزب",
+    "maritalMarried": "متزوج",
+    "maritalDivorced": "مطلق",
+    "maritalWidowed": "أرمل",
+    "dependents": "عدد المعالين",
+    "dependentsHelper": "الأشخاص الذين يعتمدون على دخلك",
+    "employmentStatus": "حالة التوظيف",
+    "employmentEmployed": "موظف",
+    "employmentUnemployed": "عاطل عن العمل",
+    "employmentSelfEmployed": "عمل حر",
+    "employmentRetired": "متقاعد",
+    "monthlyIncome": "الدخل الشهري",
+    "monthlyIncomeHelper": "إجمالي الدخل الشهري بالعملة المحلية",
+    "housingStatus": "حالة السكن",
+    "housingOwned": "ملك",
+    "housingRented": "إيجار",
+    "housingWithFamily": "مع العائلة",
+    "housingHomeless": "بلا مأوى"
+  },
+  "situation": {
+    "currentFinancialSituation": "الوضع المالي الحالي",
+    "currentFinancialSituationHelper": "صف ظروفك المالية الحالية بالتفصيل",
+    "employmentCircumstances": "ظروف العمل",
+    "employmentCircumstancesHelper": "اشرح وضع عملك وأي تحديات",
+    "reasonForApplying": "سبب التقديم",
+    "reasonForApplyingHelper": "لماذا تتقدم بطلب للحصول على مساعدة مالية؟"
+  },
+  "validation": {
+    "required": "هذا الحقل مطلوب",
+    "invalidEmail": "يرجى إدخال بريد إلكتروني صحيح",
+    "invalidPhone": "يرجى إدخال رقم هاتف صحيح",
+    "invalidUAEPhone": "يرجى إدخال رقم هاتف إماراتي صحيح (مثال: 971 4 XXX XXXX+ أو 971 50 XXX XXXX+)",
+    "invalidUAENationalId": "يرجى إدخال رقم هوية إماراتي صحيح (15 رقمًا يبدأ بـ 784)",
+    "minLength": "الحد الأدنى {{count}} أحرف مطلوب",
+    "maxLength": "الحد الأقصى {{count}} حرف",
+    "minValue": "الحد الأدنى للقيمة هو {{min}}",
+    "invalidDate": "يرجى إدخال تاريخ صحيح",
+    "mustBe18": "يجب أن يكون عمرك 18 عامًا على الأقل"
+  },
+  "success": {
+    "title": "تم تقديم الطلب بنجاح!",
+    "message": "تم استلام طلبك ويتم معالجته.",
+    "referenceNumber": "الرقم المرجعي",
+    "keepReference": "يرجى حفظ هذا الرقم المرجعي لتتبع طلبك.",
+    "nextSteps": "الخطوات التالية",
+    "nextStepsText": "ستتلقى رسالة تأكيد بالبريد الإلكتروني خلال 24 ساعة. سيقوم فريقنا بمراجعة طلبك والاتصال بك خلال 5-7 أيام عمل."
+  },
+  "errors": {
+    "submissionFailed": "فشل تقديم الطلب. يرجى المحاولة مرة أخرى.",
+    "networkError": "خطأ في الشبكة. يرجى التحقق من الاتصال والمحاولة مرة أخرى."
+  },
+  "progress": {
+    "saved": "تم حفظ التقدم تلقائيًا"
+  },
+  "ai": {
+    "helpMeWrite": "ساعدني في الكتابة",
+    "generating": "جارٍ إنشاء الاقتراح...",
+    "suggestionTitle": "اقتراح الكتابة بالذكاء الاصطناعي",
+    "accept": "قبول",
+    "edit": "تعديل",
+    "discard": "رفض",
+    "errorGeneration": "فشل إنشاء الاقتراح. يرجى المحاولة مرة أخرى.",
+    "editSuggestion": "قم بتعديل الاقتراح أدناه قبل قبوله",
+    "prompt": "أنا عاطل عن العمل وليس لدي دخل. ساعدني في وصف الصعوبات المالية التي أواجهها. الحد الأقصى - 2000 حرف. قدم خيارًا واحدًا"
+  }
+}
