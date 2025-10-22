@@ -35,21 +35,3 @@ export const clearFormData = (): void => {
         console.error('Error clearing form data from localStorage:', error);
     }
 };
-
-export const saveLanguage = (language: 'en' | 'ar'): void => {
-    try {
-        localStorage.setItem('language', language);
-    } catch (error) {
-        console.error('Error saving language preference:', error);
-    }
-};
-
-export const loadLanguage = (): 'en' | 'ar' => {
-    try {
-        const language = localStorage.getItem('language');
-        return (language as 'en' | 'ar') || 'en';
-    } catch (error) {
-        console.error('Error loading language preference:', error);
-        return 'en';
-    }
-};

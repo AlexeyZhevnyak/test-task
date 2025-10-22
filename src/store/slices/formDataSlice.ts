@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ApplicationFormData} from '../../types/application';
-import {loadFormData, saveFormData} from '../../utils/storage';
+import {loadFormData} from '../../utils/storage';
 
 const initialFormData: ApplicationFormData = {
     personal: {
@@ -29,11 +29,17 @@ const initialFormData: ApplicationFormData = {
     }
 };
 
-const savedData = loadFormData();
-const mergedFormData: ApplicationFormData = {
-    personal: {...initialFormData.personal, ...savedData.personal},
-    family: {...initialFormData.family, ...savedData.family},
-    situation: {...initialFormData.situation, ...savedData.situation}
+const loadInitialFormData = (): ApplicationFormData => {
+    try {
+        const savedData = loadFormData();
+        return {
+            personal: {...initialFormData.personal, ...savedData.personal},
+            family: {...initialFormData.family, ...savedData.family},
+            situation: {...initialFormData.situation, ...savedData.situation}
+        };
+    } catch {
+        return initialFormData;
+    }
 };
 
 interface FormDataState {
@@ -41,7 +47,7 @@ interface FormDataState {
 }
 
 const initialState: FormDataState = {
-    formData: mergedFormData
+    formData: loadInitialFormData()
 };
 
 const formDataSlice = createSlice({
@@ -50,19 +56,15 @@ const formDataSlice = createSlice({
     reducers: {
         updatePersonalInfo: (state, action: PayloadAction<Partial<ApplicationFormData['personal']>>) => {
             state.formData.personal = {...state.formData.personal, ...action.payload};
-            saveFormData({personal: state.formData.personal});
         },
         updateFamilyInfo: (state, action: PayloadAction<Partial<ApplicationFormData['family']>>) => {
             state.formData.family = {...state.formData.family, ...action.payload};
-            saveFormData({family: state.formData.family});
         },
         updateSituationInfo: (state, action: PayloadAction<Partial<ApplicationFormData['situation']>>) => {
             state.formData.situation = {...state.formData.situation, ...action.payload};
-            saveFormData({situation: state.formData.situation});
         },
         resetFormData: (state) => {
             state.formData = initialFormData;
-            saveFormData(initialFormData);
         }
     }
 });

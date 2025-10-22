@@ -5,8 +5,17 @@ interface LanguageState {
     language: Language;
 }
 
+const loadLanguage = (): Language => {
+    try {
+        const stored = localStorage.getItem('language');
+        return (stored as Language) || 'en';
+    } catch {
+        return 'en';
+    }
+};
+
 const initialState: LanguageState = {
-    language: (localStorage.getItem('language') as Language) || 'en'
+    language: loadLanguage()
 };
 
 const languageSlice = createSlice({
@@ -15,7 +24,6 @@ const languageSlice = createSlice({
     reducers: {
         setLanguage: (state, action: PayloadAction<Language>) => {
             state.language = action.payload;
-            localStorage.setItem('language', action.payload);
         }
     }
 });

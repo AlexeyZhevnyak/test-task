@@ -24,13 +24,13 @@ src/
 │   │   ├── FormDatePicker.tsx # Date picker with validation
 │   │   ├── FormField.tsx      # Text input wrapper
 │   │   ├── FormSelect.tsx     # Select dropdown wrapper
-│   │   ├── FormTextArea.tsx   # Textarea wrapper
+│   │   ├── FormTextArea.tsx   # Textarea with AI button & character counter
 │   │   └── LanguageToggle.tsx # EN/AR language switcher
 │   ├── features/              # Feature-specific components
 │   │   ├── forms/
 │   │   │   ├── PersonalInfoForm.tsx  # Step 1: Personal information
 │   │   │   ├── FamilyInfoForm.tsx    # Step 2: Family & financial info
-│   │   │   └── SituationForm.tsx     # Step 3: Situation descriptions
+│   │   │   └── SituationForm.tsx     # Step 3: Situation descriptions with AI
 │   │   ├── AiSuggestionDialog.tsx    # AI-powered form assistance modal
 │   │   ├── AppFooter.tsx             # Footer with copyright
 │   │   ├── AppHeader.tsx             # Header with title and language toggle
@@ -44,25 +44,27 @@ src/
 ├── hooks/                      # Custom React hooks
 │   ├── useFormNavigation.ts    # Wizard navigation logic
 │   ├── useLanguage.ts          # Language switching and RTL support
-│   └── useAiSuggestion.ts      # AI suggestion feature logic
+│   └── useAiSuggestion.ts      # AI suggestion with request cancellation
 ├── i18n/                       # Internationalization
 │   ├── config.ts               # i18next configuration
 │   └── locales/
 │       ├── en.json             # English translations
-│       └── ar.json             # Arabic translations
+│       └── ar.json             # Arabic translations (fully translated)
 ├── services/
-│   └── api.ts                  # Axios client and API calls
+│   └── api.ts                  # Axios client, API calls & AI integration
 ├── store/                      # Redux Toolkit state management
-│   ├── index.ts                # Store configuration with persistence middleware
+│   ├── index.ts                # Store configuration with localStorage middleware
+│   ├── middleware/
+│   │   └── localStorageMiddleware.ts # Centralized localStorage persistence
 │   └── slices/
-│       ├── formDataSlice.ts         # Form field data across all steps
-│       ├── formValidationSlice.ts   # Validation state and completed steps
-│       ├── languageSlice.ts         # Current language preference
+│       ├── formDataSlice.ts         # Form field data (pure state logic)
+│       ├── formValidationSlice.ts   # Validation state (pure state logic)
+│       ├── languageSlice.ts         # Language preference (pure state logic)
 │       └── aiSuggestionSlice.ts     # AI suggestion dialog state
 ├── types/
 │   └── application.ts          # TypeScript interfaces (forms, enums, state)
 ├── utils/
-│   └── storage.ts              # LocalStorage helpers
+│   └── storage.ts              # LocalStorage load/clear helpers
 ├── theme.ts                    # Material UI theme (RTL/LTR support)
 ├── App.tsx                     # Root component with routing
 └── main.tsx                    # Application entry point
@@ -141,9 +143,11 @@ npm run preview
 - Housing Status
 
 ### Step 3: Situation Description (`/situation`)
-- Current Financial Situation (50-1000 chars) **with AI assistance**
-- Employment Circumstances (50-1000 chars) **with AI assistance**
-- Reason for Applying (50-1000 chars) **with AI assistance**
+- Current Financial Situation (1-2000 chars) **with AI assistance**
+- Employment Circumstances (1-2000 chars) **with AI assistance**
+- Reason for Applying (1-2000 chars) **with AI assistance**
+- Real-time character counter (`{current}/{max} characters`)
+- Animated AI icon buttons positioned in label row
 
 ### Success Page (`/success`)
 - Reference number: `APP-{timestamp}-{random}`
@@ -152,24 +156,25 @@ npm run preview
 
 ## AI Writing Assistant
 
-The AI feature helps users write all three situation description fields.
+The AI feature helps users write all three situation description fields with real AI integration.
+
+### UI/UX Design
+- **Animated Icon**: Sparkle icon with breathing animation (3s loop, scale 1.0→1.1, opacity 0.8→1.0)
+- **Strategic Placement**: Icon button positioned next to field label in label row
+- **Hover Interaction**: Animation pauses on hover to prevent distraction
 
 ### How It Works
-1. User clicks **lightbulb icon** button next to any situation description field
-2. Dialog opens with loading spinner (simulates 2-second API call)
+1. User clicks animated **sparkle icon** button next to any situation description field
+2. Dialog opens with loading spinner during real AI API call
 3. AI generates contextual suggestion based on:
    - Field type (financial situation, employment, or application reason)
    - Current language (English/Arabic)
    - User's form data context
+   - Configured AI model endpoint
 4. User can:
-   - **Use This Text** - Accept and populate the field
-   - **Cancel** - Discard and keep original text
-
-### Implementation Details
-- **Component**: `AiSuggestionDialog.tsx` at /home/user/WebstormProjects/test-task/src/components/features/AiSuggestionDialog.tsx:1
-- **Hook**: `useAiSuggestion.ts` manages dialog state and generation logic
-- **Redux Slice**: `aiSuggestionSlice.ts` tracks visibility and loading state
-- **Mock Generation**: Currently simulates AI with realistic delays; ready for real API integration
+   - **Accept** - Populate the field with AI-generated text
+   - **Discard** - Close dialog and keep original text
+5. **Request Cancellation**: If user closes modal during loading, pending API request is automatically cancelled
 
 ## Validation Rules
 
@@ -183,52 +188,27 @@ The AI feature helps users write all three situation description fields.
 ### General Validation
 - **Email**: Standard RFC 5322 format
 - **Age**: Must be 18+ years old
-- **Text Areas**: 50-1000 character limits (min 50, max 1000)
+- **Text Areas**: 50-2000 character limits with real-time counter
 - **Numbers**: Non-negative values for dependents and income
 - **Required Fields**: All fields are mandatory
+- **Character Counter**: Displays `{current}/{max} characters` in selected language
 
 ## Data Persistence
 
 ### LocalStorage Strategy
+- **Centralized Middleware**: All localStorage operations handled by `localStorageMiddleware`
 - **Form Data**: Auto-saved on every field change via Redux middleware
 - **Language Preference**: Persists across sessions
+- **Completed Steps**: Tracked and persisted for step validation
 - **Survives**: Page refresh, browser restart
+- **Error Handling**: Try-catch blocks prevent crashes from localStorage failures
 
-### Redux Store Structure
-The application uses **Redux Toolkit** with modular slices:
-
-```typescript
-// formDataSlice - Form field data
-{
-  personalInfo: { name, nationalId, dateOfBirth, gender, ... },
-  familyInfo: { maritalStatus, dependents, employmentStatus, ... },
-  situationInfo: { financialSituation, employmentCircumstances, ... }
-}
-
-// formValidationSlice - Validation and submission state
-{
-  isStepValid: boolean,
-  completedSteps: number[],
-  isSubmitting: boolean,
-  isSubmitted: boolean,
-  error: string | null
-}
-
-// languageSlice - Language preference
-{
-  currentLanguage: 'en' | 'ar'
-}
-
-// aiSuggestionSlice - AI dialog state
-{
-  isOpen: boolean,
-  isLoading: boolean
-}
-```
 
 ### Storage Keys
 ```javascript
-'persist:root'  // Redux persist key containing all slices
+'application_form_data'  // Form data (personal, family, situation)
+'completedSteps'         // Array of completed step numbers
+'language'               // Current language preference ('en' or 'ar')
 ```
 
 ### Clearing Data
@@ -238,13 +218,20 @@ The application uses **Redux Toolkit** with modular slices:
 ## Architecture & Design Patterns
 
 ### State Management Architecture
-- **Modular Redux Slices**: Separation of concerns with dedicated slices
-  - `formDataSlice`: Pure data storage
+- **Modular Redux Slices**: Separation of concerns with dedicated slices (pure state logic only)
+  - `formDataSlice`: Pure data storage without localStorage calls
   - `formValidationSlice`: Validation logic and submission state
   - `languageSlice`: Language preference
   - `aiSuggestionSlice`: UI state for AI dialog
-- **Redux Persist**: Automatic LocalStorage synchronization
-- **Custom Hooks**: Business logic abstraction (`useFormNavigation`, `useLanguage`, `useAiSuggestion`)
+- **localStorage Middleware**: Centralized persistence layer
+  - Intercepts Redux actions and syncs to localStorage
+  - Monitors `formData/*`, `formValidation/*`, and `language/*` actions
+  - Handles errors gracefully with try-catch blocks
+  - Single source of truth for all persistence logic
+- **Custom Hooks**: Business logic abstraction
+  - `useFormNavigation`: Wizard navigation and validation
+  - `useLanguage`: i18n and RTL/LTR switching
+  - `useAiSuggestion`: AI API calls with AbortController for request cancellation
 
 ### Form Navigation Pattern
 - **Protected Routes**: Prevents direct access to incomplete steps

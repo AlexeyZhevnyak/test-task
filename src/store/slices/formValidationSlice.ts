@@ -9,8 +9,17 @@ interface FormValidationState {
     error: string | null;
 }
 
+const loadCompletedSteps = (): number[] => {
+    try {
+        const stored = localStorage.getItem('completedSteps');
+        return stored ? JSON.parse(stored) : [];
+    } catch {
+        return [];
+    }
+};
+
 const initialState: FormValidationState = {
-    completedSteps: JSON.parse(localStorage.getItem('completedSteps') || '[]'),
+    completedSteps: loadCompletedSteps(),
     isStepValid: false,
     isSubmitting: false,
     isSubmitted: false,
@@ -25,12 +34,10 @@ const formValidationSlice = createSlice({
         markStepCompleted: (state, action: PayloadAction<number>) => {
             if (!state.completedSteps.includes(action.payload)) {
                 state.completedSteps.push(action.payload);
-                localStorage.setItem('completedSteps', JSON.stringify(state.completedSteps));
             }
         },
         markStepIncomplete: (state, action: PayloadAction<number>) => {
             state.completedSteps = state.completedSteps.filter(step => step !== action.payload);
-            localStorage.setItem('completedSteps', JSON.stringify(state.completedSteps));
         },
         setStepValid: (state, action: PayloadAction<boolean>) => {
             state.isStepValid = action.payload;
@@ -54,7 +61,6 @@ const formValidationSlice = createSlice({
             state.referenceNumber = null;
             state.error = null;
             state.isStepValid = false;
-            localStorage.removeItem('completedSteps');
         }
     }
 });
