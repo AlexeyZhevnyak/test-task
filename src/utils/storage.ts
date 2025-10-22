@@ -1,20 +1,6 @@
 import {ApplicationFormData} from '../types/application';
 
 const STORAGE_KEY = 'application_form_data';
-
-export const saveFormData = (data: Partial<ApplicationFormData>): void => {
-    try {
-        const existingData = loadFormData();
-        const mergedData = {
-            ...existingData,
-            ...data
-        };
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(mergedData));
-    } catch (error) {
-        console.error('Error saving form data to localStorage:', error);
-    }
-};
-
 export const loadFormData = (): Partial<ApplicationFormData> => {
     try {
         const data = localStorage.getItem(STORAGE_KEY);

@@ -37,13 +37,4 @@ export interface ApplicationSubmissionResponse {
     message: string;
 }
 
-export interface ApplicationState {
-    formData: ApplicationFormData;
-    completedSteps: number[];
-    isSubmitting: boolean;
-    isSubmitted: boolean;
-    referenceNumber: string | null;
-    error: string | null;
-}
-
 export type Language = 'en' | 'ar';

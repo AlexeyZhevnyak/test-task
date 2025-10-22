@@ -1,6 +1,6 @@
 import {Box, InputLabel, TextField} from '@mui/material';
-import {Control, Controller, FieldValues, Path, RegisterOptions} from 'react-hook-form';
 import {ReactNode} from 'react';
+import {Control, Controller, FieldValues, Path, RegisterOptions} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
 
 export interface FormTextAreaProps<T extends FieldValues> {
@@ -97,7 +97,7 @@ const FormTextArea = <T extends FieldValues>({
                                     maxLength: maxLength
                                 },
                                 formHelperText: {
-                                    sx: { ml: 0, mr: 0 }
+                                    sx: {ml: 0, mr: 0}
                                 }
                             }}
                         />

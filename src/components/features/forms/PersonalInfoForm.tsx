@@ -2,14 +2,14 @@ import {Box, Grid, Typography,} from '@mui/material';
 import {useCallback, useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
-import {useAppDispatch, useAppSelector} from 'src/store';
 import FormDatePicker from 'src/components/controls/FormDatePicker.tsx';
 
 import FormField from 'src/components/controls/FormField.tsx';
 import FormSelect from 'src/components/controls/FormSelect.tsx';
+import {useFormNavigation} from 'src/hooks/useFormNavigation';
+import {useAppDispatch, useAppSelector} from 'src/store';
 import {updatePersonalInfo} from 'src/store/slices/formDataSlice';
 import {PersonalInformation} from 'src/types/application.ts';
-import {useFormNavigation} from 'src/hooks/useFormNavigation';
 
 const PersonalInfoForm = () => {
     const {onValidation} = useFormNavigation();

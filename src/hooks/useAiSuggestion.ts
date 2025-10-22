@@ -1,9 +1,9 @@
+import axios from 'axios';
 import {useCallback, useRef} from 'react';
-import {useAppDispatch, useAppSelector} from '../store';
 import {useTranslation} from 'react-i18next';
 import {callAiAPI} from '../services/api';
-import {setAiLoading, setAiSuggestion, setAiError, resetAiState} from '../store/slices/aiSuggestionSlice';
-import axios from 'axios';
+import {useAppDispatch, useAppSelector} from '../store';
+import {resetAiState, setAiError, setAiLoading, setAiSuggestion} from '../store/slices/aiSuggestionSlice';
 
 export const useAiSuggestion = () => {
     const dispatch = useAppDispatch();

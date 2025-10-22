@@ -1,8 +1,14 @@
 import {useCallback, useEffect} from 'react';
-import {useAppDispatch, useAppSelector} from '../store';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {submitApplication} from '../services/api';
-import {markStepCompleted, setError, setSubmitted, setSubmitting, setStepValid} from '../store/slices/formValidationSlice';
+import {useAppDispatch, useAppSelector} from '../store';
+import {
+    markStepCompleted,
+    setError,
+    setStepValid,
+    setSubmitted,
+    setSubmitting
+} from '../store/slices/formValidationSlice';
 
 const getStepFromPath = (pathname: string): number => {
     if (pathname.includes('/personal')) return 0;

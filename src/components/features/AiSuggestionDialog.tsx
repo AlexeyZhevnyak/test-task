@@ -1,15 +1,15 @@
-import {useState} from 'react';
 import {
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
-    Button,
-    TextField,
-    CircularProgress,
     Alert,
-    Box
+    Box,
+    Button,
+    CircularProgress,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    TextField
 } from '@mui/material';
+import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 
 export interface AiSuggestionDialogProps {
@@ -126,7 +126,7 @@ const AiSuggestionDialog = ({
                     {t('ai.discard')}
                 </Button>
 
-                { !error && !isEditing && (
+                {!error && !isEditing && (
                     <Button
                         onClick={handleEdit}
                         variant="outlined"

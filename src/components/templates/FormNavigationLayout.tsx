@@ -1,7 +1,7 @@
 import {Alert, Box} from '@mui/material';
 import {useLocation} from 'react-router-dom';
-import NavigationControls from 'src/components/features/NavigationControls.tsx';
 import FormStepper from 'src/components/features/FormStepper.tsx';
+import NavigationControls from 'src/components/features/NavigationControls.tsx';
 
 export interface FormNavigationLayoutProps {
     isStepValid: boolean;
@@ -21,14 +21,14 @@ const getStepFromPath = (pathname: string): number => {
 };
 
 const FormNavigationLayout = ({
-                          isStepValid,
-                          isSubmitting = false,
-                          error,
-                          children,
-                          onBack,
-                          onNext,
-                          onSubmit
-                      }: FormNavigationLayoutProps) => {
+                                  isStepValid,
+                                  isSubmitting = false,
+                                  error,
+                                  children,
+                                  onBack,
+                                  onNext,
+                                  onSubmit
+                              }: FormNavigationLayoutProps) => {
     const location = useLocation();
     const currentStep = getStepFromPath(location.pathname);
     const totalSteps = 3;

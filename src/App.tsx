@@ -58,7 +58,7 @@ const AppContent = () => {
                             path="/family"
                             element={
                                 <ProtectedRoute requiredStep={1}>
-                                    <FamilyInfoForm />
+                                    <FamilyInfoForm/>
                                 </ProtectedRoute>
                             }
                         />

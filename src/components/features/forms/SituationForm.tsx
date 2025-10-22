@@ -3,11 +3,11 @@ import {Box, Grid, IconButton, Typography} from '@mui/material';
 import {useCallback, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
-import {useAppDispatch, useAppSelector} from 'src/store';
 import FormTextArea from 'src/components/controls/FormTextArea.tsx';
 import AiSuggestionDialog from 'src/components/features/AiSuggestionDialog.tsx';
 import {useAiSuggestion} from 'src/hooks/useAiSuggestion';
 import {useFormNavigation} from 'src/hooks/useFormNavigation';
+import {useAppDispatch, useAppSelector} from 'src/store';
 
 import {updateSituationInfo} from 'src/store/slices/formDataSlice';
 import {SituationDescriptions} from 'src/types/application.ts';
