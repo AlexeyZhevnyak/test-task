@@ -21,47 +21,51 @@
 src/
 ├── components/
 │   ├── controls/              # Reusable form controls
+│   │   ├── FormDatePicker.tsx # Date picker with validation
 │   │   ├── FormField.tsx      # Text input wrapper
 │   │   ├── FormSelect.tsx     # Select dropdown wrapper
-│   │   ├── FormDatePicker.tsx # Date picker wrapper
-│   │   └── FormTextArea.tsx   # Textarea wrapper
+│   │   ├── FormTextArea.tsx   # Textarea wrapper
+│   │   └── LanguageToggle.tsx # EN/AR language switcher
 │   ├── features/              # Feature-specific components
 │   │   ├── forms/
-│   │   │   ├── PersonalInfoForm.tsx      # Step 1: Personal info
-│   │   │   ├── FamilyInfoForm.tsx        # Step 2: Family & financial
-│   │   │   └── SituationForm.tsx         # Step 3: Situation description
-│   │   ├── AppHeader.tsx                 # Application header
-│   │   ├── AppFooter.tsx                 # Application footer
-│   │   ├── FormStepper.tsx               # Progress indicator
-│   │   ├── NavigationControls.tsx        # Next/Back/Submit buttons
-│   │   ├── SuccessCard.tsx               # Success confirmation
-│   │   ├── LanguageToggle.tsx            # EN/AR language switcher
-│   │   └── AiSuggestionDialog.tsx        # AI suggestion popup
-│   └── templates/             # Layout templates
-│       ├── AppLayout.tsx                 # Main app layout
-│       └── FormNavigationLayout.tsx      # Form wizard layout
-├── hooks/                     # Custom React hooks
-│   ├── useFormNavigation.ts   # Form wizard navigation logic
-│   ├── useLanguage.ts         # Language switching logic
-│   └── useAiSuggestion.ts     # AI suggestion state management
-├── i18n/                      # Internationalization
-│   ├── config.ts              # i18next configuration
+│   │   │   ├── PersonalInfoForm.tsx  # Step 1: Personal information
+│   │   │   ├── FamilyInfoForm.tsx    # Step 2: Family & financial info
+│   │   │   └── SituationForm.tsx     # Step 3: Situation descriptions
+│   │   ├── AiSuggestionDialog.tsx    # AI-powered form assistance modal
+│   │   ├── AppFooter.tsx             # Footer with copyright
+│   │   ├── AppHeader.tsx             # Header with title and language toggle
+│   │   ├── FormStepper.tsx           # Step indicator (1/2/3)
+│   │   ├── NavigationControls.tsx    # Back/Next/Submit buttons
+│   │   └── SuccessCard.tsx           # Success page with reference number
+│   ├── templates/              # Layout templates
+│   │   ├── AppLayout.tsx            # Main layout wrapper
+│   │   └── FormNavigationLayout.tsx # Form wizard layout
+│   └── ProtectedRoute.tsx      # Route guard for form steps
+├── hooks/                      # Custom React hooks
+│   ├── useFormNavigation.ts    # Wizard navigation logic
+│   ├── useLanguage.ts          # Language switching and RTL support
+│   └── useAiSuggestion.ts      # AI suggestion feature logic
+├── i18n/                       # Internationalization
+│   ├── config.ts               # i18next configuration
 │   └── locales/
-│       ├── en.json            # English translations
-│       └── ar.json            # Arabic translations
-├── services/                  # API services
-│   └── api.ts                 # HTTP client & API calls
-├── store/                     # Redux store
-│   ├── index.ts               # Store configuration
-│   └── applicationSlice.ts    # Application state slice
-├── types/                     # TypeScript definitions
-│   └── application.ts         # Type definitions
-├── utils/                     # Utility functions
-│   ├── storage.ts             # localStorage helpers
-│   └── validation.ts          # Custom validators
-├── theme.ts                   # Material-UI theme config
-├── App.tsx                    # Root component
-└── main.tsx                   # Application entry point
+│       ├── en.json             # English translations
+│       └── ar.json             # Arabic translations
+├── services/
+│   └── api.ts                  # Axios client and API calls
+├── store/                      # Redux Toolkit state management
+│   ├── index.ts                # Store configuration with persistence middleware
+│   └── slices/
+│       ├── formDataSlice.ts         # Form field data across all steps
+│       ├── formValidationSlice.ts   # Validation state and completed steps
+│       ├── languageSlice.ts         # Current language preference
+│       └── aiSuggestionSlice.ts     # AI suggestion dialog state
+├── types/
+│   └── application.ts          # TypeScript interfaces (forms, enums, state)
+├── utils/
+│   └── storage.ts              # LocalStorage helpers
+├── theme.ts                    # Material UI theme (RTL/LTR support)
+├── App.tsx                     # Root component with routing
+└── main.tsx                    # Application entry point
 ```
 
 
@@ -135,9 +139,9 @@ npm run preview
 - Housing Status
 
 ### Step 3: Situation Description (`/situation`)
-- Current Financial Situation (50-2000 chars)
-- Employment Circumstances (50-2000 chars)
-- Reason for Applying (2000 chars) **with AI assistance**
+- Current Financial Situation (50-1000 chars) **with AI assistance**
+- Employment Circumstances (50-1000 chars) **with AI assistance**
+- Reason for Applying (50-1000 chars) **with AI assistance**
 
 ### Success Page (`/success`)
 - Reference number: `APP-{timestamp}-{random}`
@@ -146,16 +150,24 @@ npm run preview
 
 ## AI Writing Assistant
 
-The AI feature helps users write their "Reason for Applying" text.
+The AI feature helps users write all three situation description fields.
 
 ### How It Works
-1. User clicks **"Help Me Write"** button below the textarea
-2. Dialog opens with loading spinner
-3. AI generates suggestion based on language-specific prompt
+1. User clicks **lightbulb icon** button next to any situation description field
+2. Dialog opens with loading spinner (simulates 2-second API call)
+3. AI generates contextual suggestion based on:
+   - Field type (financial situation, employment, or application reason)
+   - Current language (English/Arabic)
+   - User's form data context
 4. User can:
-   - **Accept** - Replace field content
-   - **Edit** - Modify suggestion before accepting
-   - **Discard** - Cancel and keep original text
+   - **Use This Text** - Accept and populate the field
+   - **Cancel** - Discard and keep original text
+
+### Implementation Details
+- **Component**: `AiSuggestionDialog.tsx` at /home/user/WebstormProjects/test-task/src/components/features/AiSuggestionDialog.tsx:1
+- **Hook**: `useAiSuggestion.ts` manages dialog state and generation logic
+- **Redux Slice**: `aiSuggestionSlice.ts` tracks visibility and loading state
+- **Mock Generation**: Currently simulates AI with realistic delays; ready for real API integration
 
 ## Validation Rules
 
@@ -169,30 +181,89 @@ The AI feature helps users write their "Reason for Applying" text.
 ### General Validation
 - **Email**: Standard RFC 5322 format
 - **Age**: Must be 18+ years old
-- **Text Areas**: 2000 character limits
+- **Text Areas**: 50-1000 character limits (min 50, max 1000)
 - **Numbers**: Non-negative values for dependents and income
 - **Required Fields**: All fields are mandatory
 
 ## Data Persistence
 
 ### LocalStorage Strategy
-- **Form Data**: Auto-saved on every field change
-- **Completed Steps**: Tracked separately
+- **Form Data**: Auto-saved on every field change via Redux middleware
 - **Language Preference**: Persists across sessions
 - **Survives**: Page refresh, browser restart
 
+### Redux Store Structure
+The application uses **Redux Toolkit** with modular slices:
+
+```typescript
+// formDataSlice - Form field data
+{
+  personalInfo: { name, nationalId, dateOfBirth, gender, ... },
+  familyInfo: { maritalStatus, dependents, employmentStatus, ... },
+  situationInfo: { financialSituation, employmentCircumstances, ... }
+}
+
+// formValidationSlice - Validation and submission state
+{
+  isStepValid: boolean,
+  completedSteps: number[],
+  isSubmitting: boolean,
+  isSubmitted: boolean,
+  error: string | null
+}
+
+// languageSlice - Language preference
+{
+  currentLanguage: 'en' | 'ar'
+}
+
+// aiSuggestionSlice - AI dialog state
+{
+  isOpen: boolean,
+  isLoading: boolean
+}
+```
+
 ### Storage Keys
 ```javascript
-'applicationFormData'  // Personal, family, situation data
-'completedSteps'       // Array of completed step indices
-'language'             // Current language: 'en' | 'ar'
+'persist:root'  // Redux persist key containing all slices
 ```
 
 ### Clearing Data
 - **New Application**: Click "New Application" on success page
 - **Manual**: Clear browser localStorage for the domain
 
+## Architecture & Design Patterns
+
+### State Management Architecture
+- **Modular Redux Slices**: Separation of concerns with dedicated slices
+  - `formDataSlice`: Pure data storage
+  - `formValidationSlice`: Validation logic and submission state
+  - `languageSlice`: Language preference
+  - `aiSuggestionSlice`: UI state for AI dialog
+- **Redux Persist**: Automatic LocalStorage synchronization
+- **Custom Hooks**: Business logic abstraction (`useFormNavigation`, `useLanguage`, `useAiSuggestion`)
+
+### Form Navigation Pattern
+- **Protected Routes**: Prevents direct access to incomplete steps
+- **Browser History Override**: Uses `{replace: true}` to disable back/forward navigation
+- **Step Validation**: Each step validates before allowing progression
+- **Completed Steps Tracking**: Visual indicators for finished steps
+
+### Component Organization
+```
+controls/    → Reusable, generic form inputs (wrapper components)
+features/    → Business-specific components (form steps, dialogs)
+templates/   → Layout and page structure components
+```
+
 ## Theming & Styling
+
+### RTL/LTR Support
+- **Dynamic Theme**: Theme recreated on language change
+- **Direction Toggle**: Automatic `dir="rtl"` or `dir="ltr"` on document
+- **Font Switching**: Roboto (English) / Cairo (Arabic)
+- **Layout Mirroring**: All spacing, margins, and alignments flip for RTL
 
 ### Responsive Design
 ```
