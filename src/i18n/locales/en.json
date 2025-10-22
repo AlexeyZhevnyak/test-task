@@ -76,7 +76,8 @@
     "maxLength": "Maximum {{count}} characters allowed",
     "minValue": "Minimum value is {{min}}",
     "invalidDate": "Please enter a valid date",
-    "mustBe18": "You must be at least 18 years old"
+    "mustBe18": "You must be at least 18 years old",
+    "characterCount": "{{current}}/{{max}} characters"
   },
   "success": {
     "title": "Application Submitted Successfully!",

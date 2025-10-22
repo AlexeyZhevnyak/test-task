@@ -33,7 +33,7 @@ const generateReferenceNumber = (): string => {
     return `APP-${timestamp}-${random.toString().padStart(4, '0')}`;
 };
 
-export async function callZAPI(prompt: string, model = 'glm-4.6') {
+export async function callAiAPI(prompt: string, model = 'glm-4.6', signal?: AbortSignal) {
     const url = import.meta.env.VITE_API_URL;
     const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -64,6 +64,7 @@ export async function callZAPI(prompt: string, model = 'glm-4.6') {
                 'Accept-Language': 'en-US,en'
             },
             timeout: 120000,
+            signal: signal
         },
     );
 

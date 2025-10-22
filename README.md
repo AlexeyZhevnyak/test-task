@@ -89,6 +89,7 @@ src/
    ```env
    VITE_API_KEY=your_api_key_here
    VITE_API_URL=your_api_url_here
+   VITE_API_MODEL=your_model_here
    ```
 
    **Important:**

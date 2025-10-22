@@ -1,5 +1,5 @@
 import {AutoAwesome} from '@mui/icons-material';
-import {Box, Button, Grid, Typography} from '@mui/material';
+import {Box, Grid, IconButton, Typography} from '@mui/material';
 import {useCallback, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
@@ -11,6 +11,25 @@ import {useFormNavigation} from 'src/hooks/useFormNavigation';
 
 import {updateSituationInfo} from 'src/store/slices/formDataSlice';
 import {SituationDescriptions} from 'src/types/application.ts';
+
+const aiButtonAnimationStyles = {
+    color: 'primary.main',
+    animation: 'breathe 3s ease-in-out infinite',
+    '@keyframes breathe': {
+        '0%, 100%': {
+            transform: 'scale(1)',
+            opacity: 0.8
+        },
+        '50%': {
+            transform: 'scale(1.1)',
+            opacity: 1
+        }
+    },
+    '&:hover': {
+        backgroundColor: 'primary.lighter',
+        animation: 'none'
+    }
+}
 
 const SituationForm = () => {
     const {onValidation} = useFormNavigation();
@@ -27,9 +46,10 @@ const SituationForm = () => {
         defaultValues: situationData
     });
 
-    const {suggestion, loading, error, generateSuggestion, resetSuggestion} = useAiSuggestion();
+    const {suggestion, loading, error, generateSuggestion, resetSuggestion, cancelRequest} = useAiSuggestion();
 
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [activeField, setActiveField] = useState<keyof SituationDescriptions | null>(null);
 
     const handleFieldChange = useCallback((field: keyof SituationDescriptions, value: any) => {
         dispatch(updateSituationInfo({[field]: value}));
@@ -39,26 +59,35 @@ const SituationForm = () => {
         onValidation(isValid);
     }, [isValid, onValidation]);
 
-    const handleAiButtonClick = useCallback(async () => {
+    const handleAiButtonClick = useCallback(async (field: keyof SituationDescriptions) => {
+        setActiveField(field);
         setDialogOpen(true);
         await generateSuggestion();
     }, [generateSuggestion]);
 
     const handleAcceptSuggestion = useCallback((text: string) => {
-        setValue('reasonForApplying', text, {shouldValidate: true});
-        dispatch(updateSituationInfo({reasonForApplying: text}));
+        if (activeField) {
+            setValue(activeField, text, {shouldValidate: true});
+            dispatch(updateSituationInfo({[activeField]: text}));
+        }
         setDialogOpen(false);
         resetSuggestion();
-    }, [setValue, dispatch, resetSuggestion]);
+        setActiveField(null);
+    }, [activeField, setValue, dispatch, resetSuggestion]);
 
     const handleDiscardSuggestion = useCallback(() => {
+        cancelRequest();
         setDialogOpen(false);
         resetSuggestion();
-    }, [resetSuggestion]);
+        setActiveField(null);
+    }, [cancelRequest, resetSuggestion]);
 
     const handleCloseDialog = useCallback(() => {
+        cancelRequest();
         setDialogOpen(false);
-    }, []);
+        resetSuggestion();
+        setActiveField(null);
+    }, [cancelRequest, resetSuggestion]);
 
     return (
         <Box>
@@ -84,6 +113,17 @@ const SituationForm = () => {
                         rows={4}
                         maxLength={2000}
                         onChange={(value) => handleFieldChange('currentFinancialSituation', value)}
+                        showCharacterCount
+                        aiButton={
+                            <IconButton
+                                size="small"
+                                onClick={() => handleAiButtonClick('currentFinancialSituation')}
+                                aria-label={t('ai.helpMeWrite')}
+                                sx={aiButtonAnimationStyles}
+                            >
+                                <AutoAwesome fontSize="small"/>
+                            </IconButton>
+                        }
                     />
                 </Grid>
 
@@ -104,6 +144,17 @@ const SituationForm = () => {
                         rows={4}
                         maxLength={2000}
                         onChange={(value) => handleFieldChange('employmentCircumstances', value)}
+                        showCharacterCount
+                        aiButton={
+                            <IconButton
+                                size="small"
+                                onClick={() => handleAiButtonClick('employmentCircumstances')}
+                                aria-label={t('ai.helpMeWrite')}
+                                sx={aiButtonAnimationStyles}
+                            >
+                                <AutoAwesome fontSize="small"/>
+                            </IconButton>
+                        }
                     />
                 </Grid>
 
@@ -124,23 +175,18 @@ const SituationForm = () => {
                         rows={4}
                         maxLength={2000}
                         onChange={(value) => handleFieldChange('reasonForApplying', value)}
+                        showCharacterCount
+                        aiButton={
+                            <IconButton
+                                size="small"
+                                onClick={() => handleAiButtonClick('reasonForApplying')}
+                                aria-label={t('ai.helpMeWrite')}
+                                sx={aiButtonAnimationStyles}
+                            >
+                                <AutoAwesome fontSize="small"/>
+                            </IconButton>
+                        }
                     />
-                    <Box sx={{mt: 2, display: 'flex', justifyContent: 'flex-end'}}>
-                        <Button
-                            variant="outlined"
-                            startIcon={<AutoAwesome/>}
-                            onClick={handleAiButtonClick}
-                            size="medium"
-                            sx={{
-                                textTransform: 'none',
-                                borderRadius: 2,
-                                px: 2
-                            }}
-                            aria-label={t('ai.helpMeWrite')}
-                        >
-                            {t('ai.helpMeWrite')}
-                        </Button>
-                    </Box>
                 </Grid>
             </Grid>
 
