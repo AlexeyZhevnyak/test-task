@@ -34,11 +34,15 @@ const generateReferenceNumber = (): string => {
 };
 
 export async function callZAPI(prompt: string, model = 'glm-4.6') {
-    const url = 'https://api.z.ai/api/paas/v4/chat/completions';
-    const apiKey = import.meta.env.VITE_OPEN_API_KEY;
+    const url = import.meta.env.VITE_API_URL;
+    const apiKey = import.meta.env.VITE_API_KEY;
 
     if (!apiKey) {
         throw new Error('API key not configured');
+    }
+
+    if (!url) {
+        throw new Error('URL not configured');
     }
 
     const messages = [{
