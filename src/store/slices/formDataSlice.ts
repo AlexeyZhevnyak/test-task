@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ApplicationFormData} from '../../types/application';
-import {loadFormData} from '../../utils/storage';
+import {loadStorageData, STORAGE_FORM_DATA_KEY} from '../../utils/storage';
 
 const initialFormData: ApplicationFormData = {
     personal: {
@@ -29,25 +29,12 @@ const initialFormData: ApplicationFormData = {
     }
 };
 
-const loadInitialFormData = (): ApplicationFormData => {
-    try {
-        const savedData = loadFormData();
-        return {
-            personal: {...initialFormData.personal, ...savedData.personal},
-            family: {...initialFormData.family, ...savedData.family},
-            situation: {...initialFormData.situation, ...savedData.situation}
-        };
-    } catch {
-        return initialFormData;
-    }
-};
-
 interface FormDataState {
     formData: ApplicationFormData;
 }
 
 const initialState: FormDataState = {
-    formData: loadInitialFormData()
+    formData: loadStorageData(STORAGE_FORM_DATA_KEY, initialFormData)
 };
 
 const formDataSlice = createSlice({

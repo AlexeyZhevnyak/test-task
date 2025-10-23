@@ -1,6 +1,6 @@
 import {configureStore,} from '@reduxjs/toolkit';
 import {useDispatch, useSelector,} from 'react-redux';
-import localStorageMiddleware from './middleware/localStorageMiddleware';
+import localStorageMiddleware from 'src/store/middlewares/localStorageMiddleware';
 import aiSuggestionReducer from './slices/aiSuggestionSlice';
 import formDataReducer from './slices/formDataSlice';
 import formValidationReducer from './slices/formValidationSlice';

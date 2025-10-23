@@ -1,4 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {loadStorageData, STORAGE_COMPLETED_STEPS_KEY} from 'src/utils/storage.ts';
 
 interface FormValidationState {
     completedSteps: number[];
@@ -9,17 +10,8 @@ interface FormValidationState {
     error: string | null;
 }
 
-const loadCompletedSteps = (): number[] => {
-    try {
-        const stored = localStorage.getItem('completedSteps');
-        return stored ? JSON.parse(stored) : [];
-    } catch {
-        return [];
-    }
-};
-
 const initialState: FormValidationState = {
-    completedSteps: loadCompletedSteps(),
+    completedSteps: loadStorageData(STORAGE_COMPLETED_STEPS_KEY, []),
     isStepValid: false,
     isSubmitting: false,
     isSubmitted: false,

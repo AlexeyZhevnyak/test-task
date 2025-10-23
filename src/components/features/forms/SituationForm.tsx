@@ -1,5 +1,4 @@
-import {AutoAwesome} from '@mui/icons-material';
-import {Box, Grid, IconButton, Typography} from '@mui/material';
+import {Box, Button, Grid, Typography} from '@mui/material';
 import {useCallback, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
@@ -12,24 +11,6 @@ import {useAppDispatch, useAppSelector} from 'src/store';
 import {updateSituationInfo} from 'src/store/slices/formDataSlice';
 import {SituationDescriptions} from 'src/types/application.ts';
 
-const aiButtonAnimationStyles = {
-    color: 'primary.main',
-    animation: 'breathe 3s ease-in-out infinite',
-    '@keyframes breathe': {
-        '0%, 100%': {
-            transform: 'scale(1)',
-            opacity: 0.8
-        },
-        '50%': {
-            transform: 'scale(1.1)',
-            opacity: 1
-        }
-    },
-    '&:hover': {
-        backgroundColor: 'primary.lighter',
-        animation: 'none'
-    }
-}
 
 const SituationForm = () => {
     const {onValidation} = useFormNavigation();
@@ -89,6 +70,20 @@ const SituationForm = () => {
         setActiveField(null);
     }, [cancelRequest, resetSuggestion]);
 
+    const AiHelpButton = () => <Button
+        variant="outlined"
+        onClick={() => handleAiButtonClick('currentFinancialSituation')}
+        aria-label={t('ai.helpMeWrite')}
+        sx={{
+            fontSize: '0.75rem',
+            textTransform: 'none',
+            minWidth: 'auto',
+            padding: '2px 8px'
+        }}
+    >
+        {t('ai.helpMeWrite')}
+    </Button>
+
     return (
         <Box>
             <Typography variant="h6" gutterBottom sx={{mb: {xs: 2, sm: 3}, fontWeight: 500}}>
@@ -115,14 +110,7 @@ const SituationForm = () => {
                         onChange={(value) => handleFieldChange('currentFinancialSituation', value)}
                         showCharacterCount
                         aiButton={
-                            <IconButton
-                                size="small"
-                                onClick={() => handleAiButtonClick('currentFinancialSituation')}
-                                aria-label={t('ai.helpMeWrite')}
-                                sx={aiButtonAnimationStyles}
-                            >
-                                <AutoAwesome fontSize="small"/>
-                            </IconButton>
+                            <AiHelpButton/>
                         }
                     />
                 </Grid>
@@ -146,14 +134,7 @@ const SituationForm = () => {
                         onChange={(value) => handleFieldChange('employmentCircumstances', value)}
                         showCharacterCount
                         aiButton={
-                            <IconButton
-                                size="small"
-                                onClick={() => handleAiButtonClick('employmentCircumstances')}
-                                aria-label={t('ai.helpMeWrite')}
-                                sx={aiButtonAnimationStyles}
-                            >
-                                <AutoAwesome fontSize="small"/>
-                            </IconButton>
+                            <AiHelpButton/>
                         }
                     />
                 </Grid>
@@ -177,14 +158,7 @@ const SituationForm = () => {
                         onChange={(value) => handleFieldChange('reasonForApplying', value)}
                         showCharacterCount
                         aiButton={
-                            <IconButton
-                                size="small"
-                                onClick={() => handleAiButtonClick('reasonForApplying')}
-                                aria-label={t('ai.helpMeWrite')}
-                                sx={aiButtonAnimationStyles}
-                            >
-                                <AutoAwesome fontSize="small"/>
-                            </IconButton>
+                            <AiHelpButton/>
                         }
                     />
                 </Grid>

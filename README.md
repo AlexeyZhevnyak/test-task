@@ -25,37 +25,41 @@ src/
 │   │   ├── FormDatePicker.tsx # Date picker with validation
 │   │   ├── FormField.tsx      # Text input wrapper
 │   │   ├── FormSelect.tsx     # Select dropdown wrapper
-│   │   ├── FormTextArea.tsx   # Textarea with AI button & character counter
+│   │   ├── FormTextArea.tsx   # Textarea with character counter
 │   │   └── LanguageToggle.tsx # EN/AR language switcher
 │   ├── features/              # Feature-specific components
 │   │   ├── forms/
 │   │   │   ├── PersonalInfoForm.tsx  # Step 1: Personal information
 │   │   │   ├── FamilyInfoForm.tsx    # Step 2: Family & financial info
-│   │   │   └── SituationForm.tsx     # Step 3: Situation descriptions with AI
+│   │   │   └── SituationForm.tsx     # Step 3: Situation descriptions with AI text buttons
 │   │   ├── AiSuggestionDialog.tsx    # AI-powered form assistance modal
 │   │   ├── AppFooter.tsx             # Footer with copyright
 │   │   ├── AppHeader.tsx             # Header with title and language toggle
 │   │   ├── FormStepper.tsx           # Step indicator (1/2/3)
 │   │   ├── NavigationControls.tsx    # Back/Next/Submit buttons
 │   │   └── SuccessCard.tsx           # Success page with reference number
-│   ├── templates/              # Layout templates
+│   ├── templates/             # Layout templates
 │   │   ├── AppLayout.tsx            # Main layout wrapper
 │   │   └── FormNavigationLayout.tsx # Form wizard layout
-│   └── ProtectedRoute.tsx      # Route guard for form steps
-├── hooks/                      # Custom React hooks
-│   ├── useFormNavigation.ts    # Wizard navigation logic
-│   ├── useLanguage.ts          # Language switching and RTL support
-│   └── useAiSuggestion.ts      # AI suggestion with request cancellation
-├── i18n/                       # Internationalization
-│   ├── config.ts               # i18next configuration
+│   └── ProtectedRoute.tsx     # Route guard for form steps
+├── hooks/                     # Custom React hooks
+│   ├── useFormNavigation.ts   # Wizard navigation logic
+│   ├── useLanguage.ts         # Language switching and RTL support
+│   └── useAiSuggestion.ts     # AI suggestion with request cancellation
+├── i18n/                      # Internationalization
+│   ├── config.ts              # i18next configuration
 │   └── locales/
-│       ├── en.json             # English translations
-│       └── ar.json             # Arabic translations (fully translated)
+│       ├── en.json            # English translations
+│       └── ar.json            # Arabic translations (fully translated)
+├── providers/
+│   └── Providers.tsx          # Provider wrapper (Redux, Theme, i18n)
+├── routing/
+│   └── ApplicationRouter.tsx  # React Router configuration with protected routes
 ├── services/
-│   └── api.ts                  # Axios client, API calls & AI integration
-├── store/                      # Redux Toolkit state management
-│   ├── index.ts                # Store configuration with localStorage middleware
-│   ├── middleware/
+│   └── api.ts                 # Axios client, API calls & AI integration
+├── store/                     # Redux Toolkit state management
+│   ├── index.ts               # Store configuration with localStorage middleware
+│   ├── middlewares/
 │   │   └── localStorageMiddleware.ts # Centralized localStorage persistence
 │   └── slices/
 │       ├── formDataSlice.ts         # Form field data (pure state logic)
@@ -63,12 +67,12 @@ src/
 │       ├── languageSlice.ts         # Language preference (pure state logic)
 │       └── aiSuggestionSlice.ts     # AI suggestion dialog state
 ├── types/
-│   └── application.ts          # TypeScript interfaces (forms, enums, state)
+│   └── application.ts         # TypeScript interfaces (forms, enums, state)
 ├── utils/
-│   └── storage.ts              # LocalStorage load/clear helpers
-├── theme.ts                    # Material UI theme (RTL/LTR support)
-├── App.tsx                     # Root component with routing
-└── main.tsx                    # Application entry point
+│   └── storage.ts             # LocalStorage load/clear helpers
+├── theme.ts                   # Material UI theme (RTL/LTR support)
+├── App.tsx                    # Root component
+└── main.tsx                   # Application entry point
 ```
 
 ## Getting Started
@@ -220,8 +224,8 @@ The AI feature helps users write all three situation description fields with rea
 
 ```javascript
 'application_form_data'  // Form data (personal, family, situation)
-'completedSteps'         // Array of completed step numbers
-'language'               // Current language preference ('en' or 'ar')
+'application_completed_steps'         // Array of completed step numbers
+'application_language'               // Current language preference ('en' or 'ar')
 ```
 
 ### Clearing Data

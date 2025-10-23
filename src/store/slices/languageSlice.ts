@@ -1,21 +1,13 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {loadStorageData, STORAGE_LANGUAGE_KEY} from 'src/utils/storage.ts';
 import {Language} from '../../types/application';
 
 interface LanguageState {
     language: Language;
 }
 
-const loadLanguage = (): Language => {
-    try {
-        const stored = localStorage.getItem('language');
-        return (stored as Language) || 'en';
-    } catch {
-        return 'en';
-    }
-};
-
 const initialState: LanguageState = {
-    language: loadLanguage()
+    language: loadStorageData(STORAGE_LANGUAGE_KEY, 'en')
 };
 
 const languageSlice = createSlice({

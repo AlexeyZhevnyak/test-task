@@ -7,7 +7,7 @@ interface ProtectedRouteProps {
     requiredStep: number;
 }
 
-const ProtectedRoute = ({children, requiredStep}: ProtectedRouteProps) => {
+export const ProtectedRoute = ({children, requiredStep}: ProtectedRouteProps) => {
     const {completedSteps} = useAppSelector((state) => state.formValidation);
 
     if (requiredStep === 0) {
@@ -39,5 +39,3 @@ export const ProtectedSuccessRoute = ({children}: { children: ReactNode }) => {
 
     return <>{children}</>;
 };
-
-export default ProtectedRoute;
